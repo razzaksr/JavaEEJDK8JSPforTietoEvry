@@ -18,12 +18,15 @@
     if(session.getAttribute("user")!=null){
 %>
     <%@ taglib prefix="core" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
+    <sql:setDataSource var="hai" driver="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@localhost:1521:xe" user="system" password="admin" />
+    <sql:query var="qry" dataSource="${hai}" sql="select * from hai" />
     <table>
         <thead>
             <tr><th>ID</th><th>Name</th><th>Price</th><th>Actions</th></tr>
         </thead>
         <tbody>
-            <core:forEach var="every" items="${requestScope.all}">
+            <core:forEach var="every" items="${qry.rows}">
                 <tr>
                     <td>${every.id}</td><td>${every.name}</td><td>${every.price}</td>
                     <td>
